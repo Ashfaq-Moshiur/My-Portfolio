@@ -914,6 +914,82 @@ button > *,
   color: var(--text-muted);
 }
 
+/* ===================================================================
+   ABOUT SECTION (KNOW MYSELF)
+   =================================================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.about-main-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  padding: 2.25rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  transition: all var(--transition-normal);
+}
+
+.about-main-card:hover {
+  border-color: var(--glass-border-highlight);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 0 25px var(--accent-glow-subtle);
+}
+
+.about-main-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-highlight);
+}
+
+.about-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.about-text:last-child {
+  margin-bottom: 0;
+}
+
+.about-features-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.about-feature-card {
+  transition: transform 0.4s var(--ease-spring), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-feature-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.about-feature-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.about-feature-title {
+  font-size: 1.15rem;
+  color: var(--text-highlight);
+}
+
+.about-feature-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
 /* Skills & Cards Grid */
 .skills-grid {
   display: grid;
@@ -1995,6 +2071,12 @@ button > *,
     gap: 2.5rem;
   }
 
+  /* About Grid Stacking (1 column) */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
   /* Terminal Window */
   .terminal-window {
     min-height: 380px;
@@ -2043,6 +2125,16 @@ button > *,
   .form-group-row {
     grid-template-columns: 1fr;
     gap: 1.2rem;
+  }
+
+  /* About Section Stacking (Phablets & Mobile) */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .about-main-card {
+    padding: 1.75rem;
   }
 
   /* Timeline Horizontal Scrollable Tabs */
@@ -2182,6 +2274,48 @@ button > *,
 
   .floating-chip {
     max-width: 190px;
+  }
+
+  /* About Section Mobile Phones (Stack vertically one by one like Competencies) */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .about-main-card {
+    padding: 1.25rem;
+  }
+
+  .about-main-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .about-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .about-features-list {
+    gap: 1.25rem;
+  }
+
+  .about-feature-header {
+    gap: 0.75rem;
+  }
+
+  .about-feature-icon {
+    font-size: 1.5rem;
+  }
+
+  .about-feature-title {
+    font-size: 1.05rem;
+  }
+
+  .about-feature-desc {
+    font-size: 0.85rem;
+    line-height: 1.55;
   }
 
   /* Stats Grid Single Column */
