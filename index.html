@@ -59,14 +59,38 @@
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
 
-        <!-- Dark/Light Theme Switcher & Actions -->
+        <!-- Dark/Light Theme Switcher & Mobile Toggle -->
         <div class="nav-actions">
           <button id="theme-mode-toggle" class="theme-mode-toggle" aria-label="Toggle Dark and Light Mode" title="Switch Theme (Dark / Light)">
             <span class="theme-icon-indicator">🌙</span>
             <span class="theme-mode-text">Dark</span>
           </button>
+          <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-dropdown">
+            <span class="hamburger-bar bar-1"></span>
+            <span class="hamburger-bar bar-2"></span>
+            <span class="hamburger-bar bar-3"></span>
+          </button>
         </div>
       </nav>
+
+      <!-- Glassmorphic Dropdown Menu for Smaller Devices -->
+      <div id="mobile-dropdown" class="mobile-dropdown" aria-hidden="true">
+        <ul class="mobile-dropdown-links">
+          <li><a href="#about" class="mobile-dropdown-link"><span>About</span></a></li>
+          <li><a href="#skills" class="mobile-dropdown-link"><span>Skills &amp; Tech</span></a></li>
+          <li><a href="#projects" class="mobile-dropdown-link"><span>Portfolio Works</span></a></li>
+          <li><a href="#certificates" class="mobile-dropdown-link"><span>Certifications</span></a></li>
+          <li><a href="#volunteering" class="mobile-dropdown-link"><span>Volunteering</span></a></li>
+          <li><a href="#experience" class="mobile-dropdown-link"><span>Journey</span></a></li>
+          <li><a href="#terminal" class="mobile-dropdown-link"><span>Developer CLI</span></a></li>
+          <li><a href="#contact" class="mobile-dropdown-link"><span>Get in Touch</span></a></li>
+        </ul>
+        <div class="mobile-dropdown-footer">
+          <a href="https://www.linkedin.com/in/ashfaqmoshiur/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="width: 100%;">
+            <span>Connect on LinkedIn ↗</span>
+          </a>
+        </div>
+      </div>
     </div>
   </header>
 

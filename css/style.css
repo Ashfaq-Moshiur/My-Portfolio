@@ -406,6 +406,136 @@ body:hover .cursor-dot, body:hover .cursor-circle {
 }
 
 /* ===================================================================
+   MOBILE NAVIGATION TOGGLE & DROPDOWN MENU
+   =================================================================== */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-main);
+  transition: all var(--transition-fast);
+  z-index: 1001;
+}
+
+.mobile-menu-toggle:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-highlight);
+  color: var(--accent-primary);
+}
+
+.hamburger-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease-spring), opacity 0.2s ease;
+  transform-origin: center;
+}
+
+/* Morph Hamburger into "X" when active */
+.mobile-menu-toggle.active .bar-1 {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active .bar-2 {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-menu-toggle.active .bar-3 {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Glassmorphic Dropdown Menu (Strictly hidden on desktop) */
+.mobile-dropdown {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .mobile-menu-toggle {
+    display: inline-flex !important;
+  }
+
+  .mobile-dropdown {
+    display: block;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 1.5rem;
+    right: 1.5rem;
+    background: var(--bg-surface);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.35), 0 0 35px var(--accent-glow-subtle);
+    padding: 1.25rem;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.3s ease;
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .mobile-dropdown-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0;
+    margin: 0 0 1rem 0;
+  }
+
+  .mobile-dropdown-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+
+  .mobile-dropdown-link:hover,
+  .mobile-dropdown-link.active {
+    color: var(--accent-primary);
+    background: var(--accent-glow-subtle);
+    border-color: var(--accent-glow);
+    padding-left: 1.25rem;
+  }
+
+  .mobile-dropdown-footer {
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--glass-border);
+  }
+}
+
+/* ===================================================================
    BUTTONS (CENTER ALIGNED)
    =================================================================== */
 button,
@@ -787,7 +917,7 @@ button > *,
 /* Skills & Cards Grid */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 1.5rem;
 }
 
@@ -925,7 +1055,7 @@ button > *,
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: 2rem;
 }
 
@@ -1053,7 +1183,7 @@ button > *,
    =================================================================== */
 .cert-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: 2rem;
 }
 
@@ -1165,7 +1295,7 @@ button > *,
    =================================================================== */
 .volunteering-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: 1.75rem;
 }
 
@@ -1805,7 +1935,11 @@ button > *,
   box-shadow: 0 4px 15px var(--accent-glow);
 }
 
-/* Media Queries */
+/* ===================================================================
+   RESPONSIVE DESIGN SYSTEM & MEDIA QUERIES
+   =================================================================== */
+
+/* 1. Large Laptops & Small Desktops (<= 1200px) */
 @media (max-width: 1200px) {
   .nav-status-badge {
     display: none;
@@ -1817,68 +1951,328 @@ button > *,
     font-size: 0.82rem;
     padding: 0.35rem 0.55rem;
   }
+  .hero-title {
+    font-size: 3.1rem;
+  }
 }
 
-@media (max-width: 1024px) {
+/* 2. Tablets & Small Laptops (<= 992px) */
+@media (max-width: 992px) {
+  /* Hide desktop horizontal links, show hamburger menu */
   .nav-links {
-    gap: 0.25rem;
+    display: none !important;
   }
-  .nav-link {
-    font-size: 0.78rem;
-    padding: 0.3rem 0.45rem;
+
+  .mobile-menu-toggle {
+    display: inline-flex !important;
   }
+
+  /* Hero Section Stacking */
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 3.5rem;
   }
   
   .hero-visual-wrapper {
-    max-width: 500px;
+    max-width: 480px;
     margin: 0 auto;
+    width: 100%;
   }
 
+  /* Stats Grid (2x2) */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 
   .stat-item:nth-child(2) {
     border-right: none;
   }
 
+  /* Contact Grid Stacking */
   .contact-grid {
     grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* Terminal Window */
+  .terminal-window {
+    min-height: 380px;
   }
 }
 
+/* 3. Phablets & Mobile Devices (<= 768px) */
 @media (max-width: 768px) {
+  /* Fluid Typography */
   .hero-title {
-    font-size: 2.5rem;
+    font-size: clamp(2.1rem, 6.5vw, 2.75rem);
+    line-height: 1.2;
   }
 
-  .nav-links {
+  .hero-description {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 5.5vw, 2.3rem);
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+
+  /* Adjust Hero Floating Chips within Screen Bounds */
+  .floating-chip {
+    padding: 0.45rem 0.8rem;
+    font-size: 0.75rem;
+    gap: 0.45rem;
+  }
+
+  .chip-1 {
+    top: -12px;
+    right: 4px;
+  }
+
+  .chip-2 {
+    bottom: 12px;
+    left: 4px;
+  }
+
+  /* Forms single-column */
+  .form-group-row {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  /* Timeline Horizontal Scrollable Tabs */
+  .timeline-tabs {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0.4rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .timeline-tabs::-webkit-scrollbar {
     display: none;
   }
 
-  .form-group-row {
-    grid-template-columns: 1fr;
+  .timeline-tab-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
-  .stats-grid {
+  /* Interactive Modals */
+  .modal-content {
+    width: 95%;
+    max-width: 95%;
+    padding: 1.5rem;
+    max-height: 88vh;
+  }
+
+  .modal-body-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  /* Hide Desktop Hover Cursors on Touchscreens */
+  .cursor-dot, 
+  .cursor-circle {
+    display: none !important;
+  }
+
+  /* Soften heavy blur on mobile GPUs */
+  .bg-mesh-glow {
+    filter: blur(80px);
+    opacity: 0.18;
+  }
+}
+
+/* 4. Small Mobile Phones (<= 480px down to 320px) */
+@media (max-width: 480px) {
+  /* Compact Navbar */
+  .navbar-wrapper {
+    top: 0.5rem;
+  }
+
+  .navbar {
+    padding: 0.55rem 0.85rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .nav-brand {
+    gap: 0.5rem;
+  }
+
+  .nav-logo-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.82rem;
+    border-radius: 9px;
+  }
+
+  .nav-logo-text {
+    font-size: 0.98rem;
+  }
+
+  .nav-actions {
+    gap: 0.45rem;
+  }
+
+  /* Icon-only mode toggle on small phones */
+  .theme-mode-text {
+    display: none !important;
+  }
+
+  .theme-mode-toggle {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: var(--radius-sm);
+    justify-content: center !important;
+  }
+
+  .mobile-menu-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Dropdown Padding on Small Screens */
+  .mobile-dropdown {
+    top: calc(100% + 6px);
+    left: 0.75rem;
+    right: 0.75rem;
+    padding: 1rem 0.85rem;
+  }
+
+  .mobile-dropdown-link {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.9rem;
+  }
+
+  /* Hero Elements */
+  .hero-pill-badge {
+    font-size: 0.72rem;
+    padding: 0.35rem 0.75rem;
+    max-width: 100%;
+    white-space: normal;
+    text-align: left;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center !important;
+  }
+
+  .hero-socials {
+    justify-content: center;
+  }
+
+  .hero-avatar-overlay-badge {
+    display: none;
+  }
+
+  .floating-chip {
+    max-width: 190px;
+  }
+
+  /* Stats Grid Single Column */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
 
   .stat-item {
     border-right: none;
     border-bottom: 1px solid var(--glass-border);
-    padding-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
   }
 
   .stat-item:last-child {
     border-bottom: none;
   }
 
-  .cursor-dot, .cursor-circle {
+  .stat-number {
+    font-size: 2.2rem;
+  }
+
+  /* Project Filter Buttons */
+  .project-filters {
+    gap: 0.45rem;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .project-filters::-webkit-scrollbar {
     display: none;
+  }
+
+  .filter-btn {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Terminal Window */
+  .terminal-window {
+    padding: 0.75rem;
+  }
+
+  .terminal-output {
+    font-size: 0.78rem;
+  }
+
+  .terminal-input-row {
+    flex-wrap: wrap;
+  }
+
+  .terminal-pill-btn {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.6rem;
+  }
+
+  /* Footer Layout */
+  .site-footer {
+    padding: 3rem 0 1.5rem;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column-reverse;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer-socials {
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Toast Notification */
+  .toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .toast {
+    width: 100%;
   }
 }

@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAmbientCanvas();
   initCustomCursor();
   initThemeToggle();
+  initMobileMenu();
   initScrollSpy();
   initStatsCounter();
   initProjectFilters();
@@ -211,12 +212,71 @@ function initThemeToggle() {
 }
 
 /* -------------------------------------------------------------
+   3b. Responsive Glassmorphic Dropdown Menu
+---------------------------------------------------------------- */
+function initMobileMenu() {
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const dropdown = document.getElementById('mobile-dropdown');
+  const dropdownLinks = document.querySelectorAll('.mobile-dropdown-link');
+
+  if (!toggleBtn || !dropdown) return;
+
+  function setDropdownState(open) {
+    if (open) {
+      dropdown.classList.add('open');
+      toggleBtn.classList.add('active');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      dropdown.setAttribute('aria-hidden', 'false');
+    } else {
+      dropdown.classList.remove('open');
+      toggleBtn.classList.remove('active');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      dropdown.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = dropdown.classList.contains('open');
+    setDropdownState(!isOpen);
+  });
+
+  dropdownLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      setDropdownState(false);
+    });
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (dropdown.classList.contains('open') && !dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
+      setDropdownState(false);
+    }
+  });
+
+  // Close on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && dropdown.classList.contains('open')) {
+      setDropdownState(false);
+    }
+  });
+
+  // Automatically close on resize above mobile threshold
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 992 && dropdown.classList.contains('open')) {
+      setDropdownState(false);
+    }
+  });
+}
+
+/* -------------------------------------------------------------
    4. Scroll Spy & Navbar Blur on Scroll
 ---------------------------------------------------------------- */
 function initScrollSpy() {
   const navbar = document.querySelector('.navbar');
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
+  const mobileLinks = document.querySelectorAll('.mobile-dropdown-link');
 
   window.addEventListener('scroll', () => {
     let current = '';
@@ -229,6 +289,13 @@ function initScrollSpy() {
     });
 
     navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+
+    mobileLinks.forEach(link => {
       link.classList.remove('active');
       if (link.getAttribute('href') === `#${current}`) {
         link.classList.add('active');
